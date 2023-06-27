@@ -18,7 +18,7 @@ import Social.example.SocialNote.repositories.UserRepository;
 public class UserService {
 
 	@Autowired
-	private UserRepository userRepo;
+	 UserRepository userRepo;
 	
 	public User create(RegisterPayload rp) {
 		
