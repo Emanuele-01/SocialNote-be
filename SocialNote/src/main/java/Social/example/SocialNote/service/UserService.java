@@ -10,7 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import Social.example.SocialNote.entities.User;
-import Social.example.SocialNote.payload.UserPayload;
+import Social.example.SocialNote.payload.RegisterPayload;
 import Social.example.SocialNote.exceptions.NotFoundException;
 import Social.example.SocialNote.repositories.UserRepository;
 
@@ -20,18 +20,18 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepo;
 	
-	public User create(UserPayload up) {
+	public User create(RegisterPayload rp) {
 		
 	 User newUser = new User();	
 	 
-	 newUser.setName(up.getName());
-	 newUser.setLastName(up.getLastName());
-	 newUser.setUsername(up.getUsername());
-	 newUser.setEmail(up.getEmail());
-	 newUser.setPassword(up.getPassword());
-	 newUser.setImageProfile(up.getImageProfile());
-	 newUser.setAge(up.getAge());
-	 newUser.setDayOfHiding(up.getDayOfHiding());
+	 newUser.setName(rp.getName());
+	 newUser.setLastName(rp.getLastName());
+	 newUser.setUsername(rp.getUsername());
+	 newUser.setEmail(rp.getEmail());
+	 newUser.setPassword(rp.getPassword());
+	 newUser.setImageProfile(rp.getImageProfile());
+	 newUser.setAge(rp.getAge());
+	 newUser.setDayOfHiding(rp.getDayOfHiding());
 	 
 	 return userRepo.save(newUser);
 	};
@@ -61,18 +61,25 @@ public class UserService {
 	
 // -------------------------------------------------------------------------
 	
-	public User findByIdAndUpdate(UUID id, UserPayload up) {
+	public User findByUsername(String username) throws NotFoundException {
+		return userRepo.findByUsername(username)
+				.orElseThrow(() -> new NotFoundException("User not found"));
+	}
+	
+// -------------------------------------------------------------------------
+	
+	public User findByIdAndUpdate(UUID id, RegisterPayload rp) {
 		
 		User u = this.findById(id);
 		
-		u.setName(up.getName());
-		u.setLastName(up.getLastName());
-		u.setUsername(up.getUsername());
-		u.setEmail(up.getEmail());
-		u.setPassword(up.getPassword());
-		u.setImageProfile(up.getImageProfile());
-		u.setAge(up.getAge());
-		u.setDayOfHiding(up.getDayOfHiding());
+		u.setName(rp.getName());
+		u.setLastName(rp.getLastName());
+		u.setUsername(rp.getUsername());
+		u.setEmail(rp.getEmail());
+		u.setPassword(rp.getPassword());
+		u.setImageProfile(rp.getImageProfile());
+		u.setAge(rp.getAge());
+		u.setDayOfHiding(rp.getDayOfHiding());
 		
 		return userRepo.save(u);
 	};
