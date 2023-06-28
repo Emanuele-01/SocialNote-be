@@ -19,7 +19,7 @@ import Social.example.SocialNote.service.UserService;
 import Social.example.SocialNote.exceptions.UnauthorizedException;
 
 @RestController
-@RequestMapping("/authorization")
+@RequestMapping("/auth")
 public class AuthController {
 
 	@Autowired
@@ -39,7 +39,7 @@ public class AuthController {
 	@PostMapping("/login")
 	public ResponseEntity<AuthenticationTokenPayload> login(@RequestBody LoginPayload lp) throws NotFoundException{
 		
-		User u = uService.findByUsername(lp.getUsername());
+		User u = uService.findByEmail(lp.getEmail());
 		
 		String password = lp.getPassword();
 		String hashedPassword = u.getPassword();
@@ -48,7 +48,7 @@ public class AuthController {
 			throw new UnauthorizedException("invalid credentials");
 		};
 		
-		String token = JWTools.createToken(u);
+		String token = JWTTools.createToken(u);
 		
 		return new ResponseEntity<>( new AuthenticationTokenPayload(token), HttpStatus.OK);
 	};

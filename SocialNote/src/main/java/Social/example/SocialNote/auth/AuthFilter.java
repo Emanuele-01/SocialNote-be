@@ -31,37 +31,46 @@ public class AuthFilter extends OncePerRequestFilter{
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
-		String headerAuth = request.getHeader("Authorization");
-		
-		if (headerAuth == null | !headerAuth.startsWith("Bearer ")) {
-			throw new UnauthorizedException("add a valid token");
-		};
-		
-		String accesToken = headerAuth.substring(8);
-		
-		JWTools.isTokenValid(accesToken);
-		
-		String username = JWTools.extractSubject(accesToken);
-		log.info("-------->   " + username);
-		
-		try {
+		if(!request.getMethod().equals("OPTIONS")) {
 			
-			User u = uService.findByUsername(username);
+			String headerAuth = request.getHeader("Authorization");
 			
-			UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(u, null, u.getAuthorities());
-			authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+			System.out.println(headerAuth);
 			
-			SecurityContextHolder.getContext().setAuthentication(authToken);
+			if (headerAuth == null || !headerAuth.startsWith("Bearer ")) {
+				throw new UnauthorizedException("add a valid token");
+			};
+			
+			String accesToken = headerAuth.substring(7);
+			
+			JWTTools.isTokenValid(accesToken);
+			
+			String email = JWTTools.extractSubject(accesToken);
+			log.info("-------->   " + email);
+			
+			try {
+				
+				User u = uService.findByEmail(email);
+				
+				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(u, null, u.getAuthorities());
+				authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+				
+				SecurityContextHolder.getContext().setAuthentication(authToken);
+				
+				filterChain.doFilter(request, response);
+				
+			} catch (NotFoundException e) {
+				log.info("error ------->    " + e);
+			}
+		}else {
 			
 			filterChain.doFilter(request, response);
-			
-		} catch (NotFoundException e) {
-			log.info("error ------->    " + e);
 		}
+		
 	}
 
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) {
-		return new AntPathMatcher().match("authorization/++++++++++", request.getServletPath());
+		return new AntPathMatcher().match("auth/**", request.getServletPath());
 	};
 }

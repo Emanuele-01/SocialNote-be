@@ -28,7 +28,7 @@ public class UserController {
 	
 	@GetMapping("")
 	@ResponseStatus(HttpStatus.OK)
-	public Page<User> UserAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int size, @RequestParam(defaultValue = "id") String sorted){
+	public Page<User> userAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int size, @RequestParam(defaultValue = "id") String sorted){
 		return uService.find(page, size, sorted);
 	};
 	
@@ -42,7 +42,7 @@ public class UserController {
 	
 // ----------------------------------------------------------------------------------------------------
 	
-	@DeleteMapping("")
+	@DeleteMapping("/{:id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteUser(@PathVariable UUID id) throws Exception{
 		uService.findByIdAndDelete(id);

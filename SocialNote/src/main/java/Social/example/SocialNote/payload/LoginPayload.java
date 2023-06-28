@@ -9,7 +9,7 @@ import lombok.Setter;
 public class LoginPayload {
 
 	@NotNull
-	String username;
+	String email;
 	
 	@NotNull
 	String password;

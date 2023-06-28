@@ -21,12 +21,14 @@ public class SecuriryConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity https) throws Exception {
 		
-		https.cors(c -> c.disable());
+	//	https.cors(c -> c.disable());
 		https.csrf(c -> c.disable());
 		
-		https.authorizeHttpRequests(authorization -> authorization.requestMatchers("/authorization/register").permitAll());
-		https.authorizeHttpRequests(authorization -> authorization.requestMatchers("/authorization/login").permitAll());
+		https.authorizeHttpRequests(authorization -> authorization.requestMatchers("/auth/**").permitAll());
 		https.authorizeHttpRequests(authorization -> authorization.requestMatchers("/user/{:id}").authenticated());
+		https.authorizeHttpRequests(authorization -> authorization.requestMatchers("/post").permitAll());
+		https.authorizeHttpRequests(authorization -> authorization.requestMatchers("/post/{:id}").authenticated());
+		
 		
 		https.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
 		

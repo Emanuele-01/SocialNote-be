@@ -14,30 +14,33 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 
 @Component
-public class JWTools {
+public class JWTTools {
 	
 	private static String secret;
+	
+	
 	private static int expiration;
 	
 	@Value("${spring.application.jwt.secret}")
 	public void setSecret(String keySecret) {
 		secret = keySecret;
+		System.out.println("" + secret);
 	};
 	
-	@Value("${spring.appliaction.jwt.expirationindays}")
+	@Value("${spring.application.jwt.expirationindays}")
 	public void setExpiration(String expirationDays) {
 		expiration = Integer.parseInt(expirationDays) * 1000 * 60 * 60 * 24 * 14;
 	};
 
 	public static String createToken(User us) {
-		String token = Jwts.builder().setSubject(us.getUsername())
+		String token = Jwts.builder().setSubject(us.getEmail())
 				.setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + expiration))
 				.signWith(Keys.hmacShaKeyFor(secret.getBytes())).compact();
 		
 		return token;
 	};
 	
-	public static void isTokenValid(String token) {
+	static public void isTokenValid(String token) {
 		try {
 			Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(secret.getBytes())).build().parse(token);
 			
@@ -46,7 +49,7 @@ public class JWTools {
 			throw new UnauthorizedException("not valid token");
 			
 		}catch(ExpiredJwtException e) {
-			
+			 
 			throw new UnauthorizedException("expired token");
 			
 		} catch (Exception e) {
