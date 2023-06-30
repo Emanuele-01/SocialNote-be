@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,13 +22,13 @@ import Social.example.SocialNote.payload.PostPayload;
 import Social.example.SocialNote.service.PostService;
 
 @RestController
-@RequestMapping("/post")
+@RequestMapping(path = "social&note/post")
 public class PostController {
 
 	@Autowired
 	PostService pService;
 	
-	@GetMapping("")
+	@GetMapping(path = "")
 	@ResponseStatus(HttpStatus.OK)
 	public Page<Post> postAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int size, @RequestParam(defaultValue = "id") String sorted) {
 		return pService.find(page, size, sorted);
@@ -35,7 +36,7 @@ public class PostController {
 	
 // ------------------------------------------------------------------------------------------
 	
-	@PostMapping("")
+	@PostMapping(path ="")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Post Create(@RequestBody PostPayload post) {
 		return pService.create(post);
@@ -43,7 +44,7 @@ public class PostController {
 	
 // -----------------------------------------------------------------------------------------
 	
-	@PutMapping("/{:id}")
+	@PutMapping(path = "/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Post findAndUpdate(@PathVariable UUID id, @RequestBody PostPayload post) {
 		return pService.findByIdAndUpdate(id, post);
@@ -51,9 +52,9 @@ public class PostController {
 	
 // -----------------------------------------------------------------------------------------
 	
-	@DeleteMapping("/:id")
+	@DeleteMapping(path = "/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deletePost(@PathVariable UUID id) {
-		pService.findByIdAndDelete(id);
+	public void deletePost(@PathVariable UUID id, Authentication auth) {
+		pService.findByIdAndDelete(id, auth);
 	};
 }

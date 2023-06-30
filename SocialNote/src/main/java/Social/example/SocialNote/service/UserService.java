@@ -7,12 +7,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import Social.example.SocialNote.entities.User;
 import Social.example.SocialNote.entities.UserRole;
 import Social.example.SocialNote.payload.RegisterPayload;
 import Social.example.SocialNote.exceptions.NotFoundException;
+import Social.example.SocialNote.exceptions.UnauthorizedException;
 import Social.example.SocialNote.repositories.UserRepository;
 
 @Service
@@ -76,9 +78,15 @@ public class UserService {
 	}
 // -------------------------------------------------------------------------
 	
-	public User findByIdAndUpdate(UUID id, RegisterPayload rp) {
+	public User findByIdAndUpdate(UUID id, RegisterPayload rp, Authentication auth) {
 		
 		User u = this.findById(id);
+		
+		String authEmail = ( (User) auth.getPrincipal()).getEmail();
+		
+		if(!u.getEmail().equals(authEmail.toString())) {
+			throw new UnauthorizedException("Not Valid User for this action");
+		};
 		
 		u.setName(rp.getName());
 		u.setLastName(rp.getLastName());
@@ -94,9 +102,17 @@ public class UserService {
 	
 // ------------------------------------------------------------------------
 	
-	public void findByIdAndDelete(UUID id) throws NotFoundException {
+	public void findByIdAndDelete(UUID id, Authentication auth) throws NotFoundException {
 		
 		User u = this.findById(id);
+		
+		String authEmail = auth.getName();
+		System.out.println(authEmail);
+		
+		if(!u.getUsername().equals(authEmail)) {
+			throw new UnauthorizedException("Not Valid User for this action");
+		};
+		
 		userRepo.delete(u);
 	};
 }

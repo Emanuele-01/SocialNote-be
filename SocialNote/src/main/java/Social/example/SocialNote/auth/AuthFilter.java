@@ -35,17 +35,17 @@ public class AuthFilter extends OncePerRequestFilter{
 			
 			String headerAuth = request.getHeader("Authorization");
 			
-			System.out.println(headerAuth);
+			
 			
 			if (headerAuth == null || !headerAuth.startsWith("Bearer ")) {
 				throw new UnauthorizedException("add a valid token");
 			};
 			
-			String accesToken = headerAuth.substring(7);
+			String accessToken = headerAuth.substring(7);
 			
-			JWTTools.isTokenValid(accesToken);
+			JWTTools.isTokenValid(accessToken);
 			
-			String email = JWTTools.extractSubject(accesToken);
+			String email = JWTTools.extractSubject(accessToken);
 			log.info("-------->   " + email);
 			
 			try {
@@ -71,6 +71,6 @@ public class AuthFilter extends OncePerRequestFilter{
 
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) {
-		return new AntPathMatcher().match("auth/**", request.getServletPath());
+		return new AntPathMatcher().match("/auth/**", request.getServletPath());
 	};
 }

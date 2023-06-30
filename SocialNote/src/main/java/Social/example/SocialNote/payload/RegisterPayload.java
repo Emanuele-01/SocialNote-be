@@ -12,31 +12,31 @@ import lombok.Setter;
 public class RegisterPayload {
 
 	@NotNull(message = "enter a valid name")
-	@Size(min = 3, max = 14, message = "There must be a minimum 3 characters and a maximum of 14")
+
 	 String name;
 	
 // ---------------------------------------------------------------	
 	
 	@NotNull(message = "enter a valid last name")
-	@Size(min = 3, max = 14, message = "There must be a minimum 3 characters and a maximum of 14")
+
 	 String lastName;
 	
 // ---------------------------------------------------------------	
 	
 	@NotNull(message = "enter a valid username")
-	@Size(min = 3, max = 15, message = "There must be a minimum 3 characters and a maximum of 15")
+
 		String username;
 		
 // ---------------------------------------------------------------	
 	
 	@NotNull(message = "enter a valid email")
-	@Size(min = 10, max = 25, message = "There must be a minimum 10 characters and a maximum of 25")
+
 		String email;
 	
 // ---------------------------------------------------------------
 	
 	@NotNull(message = "enter a valid password")
-	@Size(min = 4, message = "There must be a minimum 4 characters")
+
 		String password;
 	
 // ---------------------------------------------------------------
@@ -47,7 +47,7 @@ public class RegisterPayload {
 // ---------------------------------------------------------------
 	
 	@NotNull(message = "enter a valid age")
-	@Size(min = 1, max = 3, message = "There must be a minimum 1 characters and a maximum of 3")
+
 	 int age;
 	
 // ---------------------------------------------------------------

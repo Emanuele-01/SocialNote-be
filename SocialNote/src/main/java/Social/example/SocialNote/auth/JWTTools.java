@@ -18,7 +18,6 @@ public class JWTTools {
 	
 	private static String secret;
 	
-	
 	private static int expiration;
 	
 	@Value("${spring.application.jwt.secret}")
@@ -28,8 +27,8 @@ public class JWTTools {
 	};
 	
 	@Value("${spring.application.jwt.expirationindays}")
-	public void setExpiration(String expirationDays) {
-		expiration = Integer.parseInt(expirationDays) * 1000 * 60 * 60 * 24 * 14;
+	public void setExpiration(String expirationInDays) {
+		expiration = Integer.parseInt(expirationInDays) * 24 * 60 * 60 * 1000;
 	};
 
 	public static String createToken(User us) {

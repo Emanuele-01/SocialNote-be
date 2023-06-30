@@ -81,11 +81,6 @@
             <artifactId>jjwt-jackson</artifactId>
             <version>0.11.5</version>
         </dependency>
-        <dependency>
-            <groupId>com.opencsv</groupId>
-            <artifactId>opencsv</artifactId>
-            <version>4.1</version>
-        </dependency>
 		<dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>

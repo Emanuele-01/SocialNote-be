@@ -7,18 +7,24 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import Social.example.SocialNote.entities.Post;
 import Social.example.SocialNote.exceptions.NotFoundException;
+import Social.example.SocialNote.exceptions.UnauthorizedException;
 import Social.example.SocialNote.payload.PostPayload;
 import Social.example.SocialNote.repositories.PostRepository;
+import Social.example.SocialNote.repositories.UserRepository;
 
 @Service
 public class PostService {
 
 	@Autowired
 	PostRepository postRepo;
+	
+	@Autowired
+	UserRepository uRepo;
 	
 	public Post create(PostPayload post) {
 		
@@ -28,6 +34,7 @@ public class PostService {
 		newPost.setBodyText(post.getBodyText());
 		newPost.setPublicationDate(post.getPublicationDate());
 		newPost.setCity(post.getCity());
+		newPost.setUser(uRepo.findById(post.getUser()).orElseThrow(() -> new NotFoundException("User not Found")));
 		
 		return postRepo.save(newPost);
 	};
@@ -71,9 +78,14 @@ public Page<Post> find(int page, int size, String sortedBy) {
 	
 // -------------------------------------------------------------------------------------------
 	
-	public void findByIdAndDelete(UUID id) throws NotFoundException{
+	public void findByIdAndDelete(UUID id, Authentication auth) throws NotFoundException{
 		
 		Post p = this.findById(id);
+		
+		  if (!p.getUser().getUsername().equals((auth.getName()))) {
+	            throw new UnauthorizedException("Not Valid User for this action");
+	        }
+		
 		postRepo.delete(p);
 	};
 }
