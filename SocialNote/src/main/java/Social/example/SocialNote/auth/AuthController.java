@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ public class AuthController {
 	@Autowired
 	private PasswordEncoder crypt;
 	
+	//@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping("/register")
 	public ResponseEntity<User> register(@RequestBody @Validated RegisterPayload rp) {
 		
@@ -36,6 +38,8 @@ public class AuthController {
 		return new ResponseEntity<>(createU, HttpStatus.CREATED);
 	};
 	
+	
+	//@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping("/login")
 	public ResponseEntity<AuthenticationTokenPayload> login(@RequestBody LoginPayload lp) throws NotFoundException{
 		
