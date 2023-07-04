@@ -29,7 +29,7 @@ public class AuthController {
 	@Autowired
 	private PasswordEncoder crypt;
 	
-	//@CrossOrigin(origins = "http://localhost:3000")
+
 	@PostMapping("/register")
 	public ResponseEntity<User> register(@RequestBody @Validated RegisterPayload rp) {
 		
@@ -39,7 +39,7 @@ public class AuthController {
 	};
 	
 	
-	//@CrossOrigin(origins = "http://localhost:3000")
+	
 	@PostMapping("/login")
 	public ResponseEntity<AuthenticationTokenPayload> login(@RequestBody LoginPayload lp) throws NotFoundException{
 		

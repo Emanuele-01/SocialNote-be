@@ -25,27 +25,28 @@ public class SecuriryConfig {
 	CorsFilter corsFilter;
 	
 	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity https) throws Exception {
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		
 		
-		https.csrf(c -> c.disable());
+		http.csrf(c -> c.disable());
 		
-		https.authorizeHttpRequests(authorization -> authorization.requestMatchers("/auth/**").permitAll());
-		https.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.DELETE, "/users/**").hasAnyAuthority("ADMIN", "USER"));
-		https.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.PUT, "/users/**").hasAnyAuthority("USER", "ADMIN"));
-		https.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.GET, "/users/**").hasAnyAuthority("USER", "ADMIN"));
-		https.authorizeHttpRequests(authorization -> authorization.requestMatchers("/users").permitAll());
-		https.authorizeHttpRequests(authorization -> authorization.requestMatchers("/post").permitAll());
-		https.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.DELETE,"/post/**").hasAnyAuthority("USER", "ADMIN"));
-		https.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.PUT,"/post/**").hasAnyAuthority("USER", "ADMIN"));
-		https.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.GET,"/post/**").hasAnyAuthority("USER", "ADMIN"));
+		http.authorizeHttpRequests(authorization -> authorization.requestMatchers("/auth/**").permitAll());
+		http.authorizeHttpRequests(authorization -> authorization.requestMatchers("/auth/register").permitAll());
+		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.DELETE, "/social&note/users/**").hasAnyAuthority("ADMIN", "USER"));
+		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.PUT, "/social&note/users/**").hasAnyAuthority("USER", "ADMIN"));
+		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.GET, "/social&note/users/**").hasAnyAuthority("USER", "ADMIN"));
+		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.GET, "/social&note/users").permitAll());
+		http.authorizeHttpRequests(authorization -> authorization.requestMatchers("/post").permitAll());
+		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.DELETE,"/post/**").hasAnyAuthority("USER", "ADMIN"));
+		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.PUT,"/post/**").hasAnyAuthority("USER", "ADMIN"));
+		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.GET,"/post/**").hasAnyAuthority("USER", "ADMIN"));
 		
-		https.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
-		https.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);
 		
-		https.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		
-		return https.build();
+		return http.build();
 	};
 	
 	@Bean
