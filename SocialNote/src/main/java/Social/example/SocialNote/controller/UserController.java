@@ -49,4 +49,15 @@ public class UserController {
 	public void deleteUser(@PathVariable UUID id, Authentication auth) throws NotFoundException{
 		uService.findByIdAndDelete(id, auth);
 	};
+	
+// ----------------------------------------------------------------------------------------------
+	
+	@GetMapping("/me")
+	@ResponseStatus(HttpStatus.OK)
+	public User getUser(Authentication auth) throws NotFoundException{
+		
+		User user = (User) auth.getPrincipal();
+		UUID userId = user.getId();
+		return uService.findById(userId);
+	};
 }
