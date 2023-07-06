@@ -64,9 +64,13 @@ public Page<Post> find(int page, int size, String sortedBy) {
 	
 // --------------------------------------------------------------------------------------------
 	
-	public Post findByIdAndUpdate(UUID id, PostPayload post) {
+	public Post findByIdAndUpdate(UUID id, PostPayload post, Authentication auth) {
 		
 		Post p = this.findById(id);
+		
+		 if (!p.getUser().getUsername().equals((auth.getName()))) {
+	            throw new UnauthorizedException("Not Valid User for this action");
+	        }
 		
 		p.setTitle(post.getTitle());
 		p.setBodyText(post.getBodyText());

@@ -54,8 +54,8 @@ public class PostController {
 	
 	@PutMapping(path = "/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public Post findAndUpdate(@PathVariable UUID id, @RequestBody PostPayload post) {
-		return pService.findByIdAndUpdate(id, post);
+	public Post findAndUpdate(@PathVariable UUID id, @RequestBody PostPayload post, Authentication auth) {
+		return pService.findByIdAndUpdate(id, post, auth);
 	};
 	
 // -----------------------------------------------------------------------------------------
