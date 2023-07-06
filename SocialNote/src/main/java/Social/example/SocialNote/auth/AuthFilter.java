@@ -71,6 +71,14 @@ public class AuthFilter extends OncePerRequestFilter{
 
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) {
-		return new AntPathMatcher().match("/auth/**", request.getServletPath());
+		String servletPath = request.getServletPath();
+		
+		boolean shouldFilter = new AntPathMatcher().match("/auth/**", servletPath);
+		
+		shouldFilter = shouldFilter || new AntPathMatcher().match("/social&note/post", servletPath);
+		
+		shouldFilter = shouldFilter || new AntPathMatcher().match("/social&note/users", servletPath);
+		
+		return shouldFilter;
 	};
 }
