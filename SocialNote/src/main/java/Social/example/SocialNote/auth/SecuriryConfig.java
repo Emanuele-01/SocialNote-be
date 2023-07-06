@@ -36,10 +36,11 @@ public class SecuriryConfig {
 		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.PUT, "/social&note/users/**").hasAnyAuthority("USER", "ADMIN"));
 		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.GET, "/social&note/users/**").hasAnyAuthority("USER", "ADMIN"));
 		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.GET, "/social&note/users").permitAll());
-		http.authorizeHttpRequests(authorization -> authorization.requestMatchers("/post").permitAll());
-		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.DELETE,"/post/**").hasAnyAuthority("USER", "ADMIN"));
-		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.PUT,"/post/**").hasAnyAuthority("USER", "ADMIN"));
-		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.GET,"/post/**").hasAnyAuthority("USER", "ADMIN"));
+		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.GET, "/social&note/users/me").authenticated());
+		http.authorizeHttpRequests(authorization -> authorization.requestMatchers("/social&note/post").permitAll());
+		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.DELETE,"/social&note/post/**").hasAnyAuthority("USER", "ADMIN"));
+		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.PUT,"/social&note/post/**").hasAnyAuthority("USER", "ADMIN"));
+		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.GET,"/social&note/post/**").hasAnyAuthority("USER", "ADMIN"));
 		
 		http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
 		http.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);

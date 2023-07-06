@@ -36,6 +36,14 @@ public class PostController {
 	
 // ------------------------------------------------------------------------------------------
 	
+	@GetMapping(path = "/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public Post getPost(@PathVariable UUID id) {
+		return pService.findById(id);
+	};
+	
+// ------------------------------------------------------------------------------------------
+	
 	@PostMapping(path ="")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Post Create(@RequestBody PostPayload post) {

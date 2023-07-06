@@ -33,23 +33,6 @@ public class UserController {
 	public Page<User> userAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int size, @RequestParam(defaultValue = "id") String sorted){
 		return uService.find(page, size, sorted);
 	};
-	
-// ---------------------------------------------------------------------------------------------------
-	
-	@PutMapping(path = "/{:id}")
-	@ResponseStatus(HttpStatus.OK)
-	public User findAndUpdate(@PathVariable UUID id, @RequestBody RegisterPayload rp, Authentication auth) throws Exception {
-		return uService.findByIdAndUpdate(id, rp, auth);
-	};
-	
-// ----------------------------------------------------------------------------------------------------
-	
-	@DeleteMapping(path = "/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteUser(@PathVariable UUID id, Authentication auth) throws NotFoundException{
-		uService.findByIdAndDelete(id, auth);
-	};
-	
 // ----------------------------------------------------------------------------------------------
 	
 	@GetMapping("/me")
@@ -60,4 +43,21 @@ public class UserController {
 		UUID userId = user.getId();
 		return uService.findById(userId);
 	};
+// ----------------------------------------------------------------------------------------------
+	
+	@PutMapping(path = "/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public User findAndUpdate(@PathVariable UUID id, @RequestBody RegisterPayload rp, Authentication auth) throws Exception {
+		return uService.findByIdAndUpdate(id, rp, auth);
+	};
+	
+// ----------------------------------------------------------------------------------------------
+	
+	@DeleteMapping(path = "/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void deleteUser(@PathVariable UUID id, Authentication auth) throws NotFoundException{
+		uService.findByIdAndDelete(id, auth);
+	};
+	
+	
 }
