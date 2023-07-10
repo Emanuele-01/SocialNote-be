@@ -32,7 +32,7 @@ public class SecuriryConfig {
 		
 		http.authorizeHttpRequests(authorization -> authorization.requestMatchers("/auth/**").permitAll());
 		http.authorizeHttpRequests(authorization -> authorization.requestMatchers("/auth/register").permitAll());
-		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.GET, "/social&note/post").permitAll());
+		http.authorizeHttpRequests(authorization -> authorization.requestMatchers("/social&note/post").permitAll());
 		http.authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.GET, "/social&note/users").permitAll());
 		
 		// -----------------------------------------------------------------------------------------------------------------------------------------------------------
