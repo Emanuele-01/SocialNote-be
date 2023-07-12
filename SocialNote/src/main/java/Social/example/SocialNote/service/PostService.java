@@ -1,5 +1,6 @@
 package Social.example.SocialNote.service;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class PostService {
 		
 		newPost.setTitle(post.getTitle());
 		newPost.setBodyText(post.getBodyText());
-		newPost.setPublicationDate(post.getPublicationDate());
+		newPost.setPublicationDate(LocalDate.now());
 		newPost.setCity(post.getCity());
 		newPost.setUser(uRepo.findById(post.getUser()).orElseThrow(() -> new NotFoundException("User not Found")));
 		
@@ -74,7 +75,7 @@ public Page<Post> find(int page, int size, String sortedBy) {
 		
 		p.setTitle(post.getTitle());
 		p.setBodyText(post.getBodyText());
-		p.setPublicationDate(post.getPublicationDate());
+		p.setPublicationDate(LocalDate.now());
 		p.setCity(post.getCity());
 		
 		return postRepo.save(p);

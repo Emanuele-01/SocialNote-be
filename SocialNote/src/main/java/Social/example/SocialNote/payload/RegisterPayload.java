@@ -13,31 +13,31 @@ public class RegisterPayload {
 
 	@NotNull(message = "enter a valid name")
 
-	 String name;
+	String name;
 	
 // ---------------------------------------------------------------	
 	
 	@NotNull(message = "enter a valid last name")
 
-	 String lastName;
+	String lastName;
 	
 // ---------------------------------------------------------------	
 	
 	@NotNull(message = "enter a valid username")
 
-		String username;
+	String username;
 		
 // ---------------------------------------------------------------	
 	
 	@NotNull(message = "enter a valid email")
 
-		String email;
+	String email;
 	
 // ---------------------------------------------------------------
 	
 	@NotNull(message = "enter a valid password")
 
-		String password;
+	String password;
 	
 // ---------------------------------------------------------------
 	
@@ -48,7 +48,7 @@ public class RegisterPayload {
 	
 	@NotNull(message = "enter a valid age")
 
-	 int age;
+	int age;
 	
 // ---------------------------------------------------------------
 	
