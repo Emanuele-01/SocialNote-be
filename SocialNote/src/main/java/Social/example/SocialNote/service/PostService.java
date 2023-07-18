@@ -75,8 +75,6 @@ public Page<Post> find(int page, int size, String sortedBy) {
 		
 		p.setTitle(post.getTitle());
 		p.setBodyText(post.getBodyText());
-		p.setPublicationDate(LocalDate.now());
-		p.setCity(post.getCity());
 		
 		return postRepo.save(p);
 	};
