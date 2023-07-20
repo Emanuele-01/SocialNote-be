@@ -8,7 +8,7 @@ questo spazio di lavoro é stato utilizzato per la creazione di un server che po
 
 # EN-
 
-this workspace was used to create a server that could handle requests from the SocialNote application ((Link Github: https://github.com/Emanuele-01/SocialNote)).
+this workspace was used to create a server that could handle requests from the SocialNote application (Link Github: https://github.com/Emanuele-01/SocialNote).
 
 - the technologies used are JAVA and the Spring framework
 
