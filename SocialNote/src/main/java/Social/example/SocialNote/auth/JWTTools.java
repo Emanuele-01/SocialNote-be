@@ -23,7 +23,6 @@ public class JWTTools {
 	@Value("${spring.application.jwt.secret}")
 	public void setSecret(String keySecret) {
 		secret = keySecret;
-		System.out.println("" + secret);
 	};
 	
 	@Value("${spring.application.jwt.expirationindays}")

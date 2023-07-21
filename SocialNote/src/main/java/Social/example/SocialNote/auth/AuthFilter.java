@@ -36,7 +36,6 @@ public class AuthFilter extends OncePerRequestFilter{
 			String headerAuth = request.getHeader("Authorization");
 			
 			
-			System.out.println(headerAuth);
 			if (headerAuth == null || !headerAuth.startsWith("Bearer ")) {
 				throw new UnauthorizedException("add a valid token");
 			};

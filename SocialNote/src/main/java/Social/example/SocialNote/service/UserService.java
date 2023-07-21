@@ -107,7 +107,6 @@ public class UserService {
 		User u = this.findById(id);
 		
 		String authEmail = auth.getName();
-		System.out.println(authEmail);
 		
 		if(!u.getUsername().equals(authEmail)) {
 			throw new UnauthorizedException("Not Valid User for this action");
